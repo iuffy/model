@@ -27,12 +27,14 @@ $$ LANGUAGE PLPGSQL;
 CREATE TABLE "blog".blog
 (
   id bigint DEFAULT "blog".next_id() NOT NULL,
+  user_id bigint NOT NULL,
   title varchar NOT NULL,
   content text,
   status int DEFAULT 1,
   created bigint DEFAULT unix_now(),
   last_updated bigint DEFAULT unix_now(),
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES "user".user (id) MATCH SIMPLE
 )
 WITH (
   OIDS=FALSE

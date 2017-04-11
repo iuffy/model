@@ -845,7 +845,7 @@ module.exports =
 	
 	var _db2 = _interopRequireDefault(_db);
 	
-	var _errors2 = __webpack_require__(11);
+	var _errors2 = __webpack_require__(10);
 	
 	var _errors3 = _interopRequireDefault(_errors2);
 	
@@ -1592,6 +1592,18 @@ module.exports =
 	    }
 	  });
 	});
+	
+	var _blog = __webpack_require__(15);
+	
+	Object.keys(_blog).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _blog[key];
+	    }
+	  });
+	});
 
 /***/ },
 /* 8 */
@@ -1635,13 +1647,11 @@ module.exports =
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	__webpack_require__(10);
-	
-	var _errors = __webpack_require__(11);
+	var _errors = __webpack_require__(10);
 	
 	var _errors2 = _interopRequireDefault(_errors);
 	
-	var _validator = __webpack_require__(14);
+	var _validator = __webpack_require__(13);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -2004,19 +2014,13 @@ module.exports =
 	  avatar: _validator.Joi.string().allow('', null)
 	};
 	User.STATUS = {
-	  INACTIVE: 1,
-	  ACTIVE: 2,
-	  DISABLED: 9
+	  INACTIVE: 10,
+	  ACTIVE: 20,
+	  DISABLED: 90
 	};
 
 /***/ },
 /* 10 */
-/***/ function(module, exports) {
-
-	module.exports = require("date-utils");
-
-/***/ },
-/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2027,7 +2031,7 @@ module.exports =
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
-	var _restifyErrors = __webpack_require__(12);
+	var _restifyErrors = __webpack_require__(11);
 	
 	var _restifyErrors2 = _interopRequireDefault(_restifyErrors);
 	
@@ -2042,7 +2046,7 @@ module.exports =
 	  return name;
 	}
 	
-	_restifyErrors2.default.localization = __webpack_require__(13);
+	_restifyErrors2.default.localization = __webpack_require__(12);
 	
 	_restifyErrors2.default.lang = function (error) {
 	  if (error.message) return error.message;
@@ -2075,13 +2079,13 @@ module.exports =
 	exports.default = _restifyErrors2.default;
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports) {
 
 	module.exports = require("restify-errors");
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -2094,7 +2098,7 @@ module.exports =
 	};
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2106,11 +2110,11 @@ module.exports =
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
-	var _joi = __webpack_require__(15);
+	var _joi = __webpack_require__(14);
 	
 	var _joi2 = _interopRequireDefault(_joi);
 	
-	var _errors = __webpack_require__(11);
+	var _errors = __webpack_require__(10);
 	
 	var _errors2 = _interopRequireDefault(_errors);
 	
@@ -2269,10 +2273,356 @@ module.exports =
 	exports.Joi = _joi2.default;
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports) {
 
 	module.exports = require("joi");
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Blog = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _errors = __webpack_require__(10);
+	
+	var _errors2 = _interopRequireDefault(_errors);
+	
+	var _validator = __webpack_require__(13);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var ERRORS = {
+	  CreateBlogFailed: 400,
+	  UpdateBlogFailed: 400,
+	  BlogNotFound: 404
+	};
+	
+	_errors2.default.register(ERRORS);
+	
+	var Blog = exports.Blog = function () {
+	  function Blog(data) {
+	    _classCallCheck(this, Blog);
+	
+	    if (data) {
+	      if (data.id) this.id = data.id;
+	      if (data.user) this.user = data.user;
+	      if (data.title) this.title = data.title;
+	      if (data.content) this.content = data.content;
+	      if (data.status) this.status = data.status;
+	      if (data.created) this.created = data.created;
+	    }
+	  }
+	
+	  _createClass(Blog, [{
+	    key: 'create',
+	    value: function () {
+	      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+	        var query, result, row;
+	        return regeneratorRuntime.wrap(function _callee$(_context) {
+	          while (1) {
+	            switch (_context.prev = _context.next) {
+	              case 0:
+	                (0, _validator.validate)(this, (0, _validator.getSchema)(Blog.SCHEMA, 'user', 'title', 'content'));
+	                query = '\n      INSERT INTO blog.blog (user_id, title, content)\n      VALUES ($1, $2, $3)\n      RETURNING id\n      ;';
+	                /* eslint-disable no-undef */
+	
+	                _context.next = 4;
+	                return db.query(query, [this.user.id, this.title, this.content]);
+	
+	              case 4:
+	                result = _context.sent;
+	
+	                if (!(result.rowCount <= 0)) {
+	                  _context.next = 7;
+	                  break;
+	                }
+	
+	                throw new _errors2.default.CreateBlogFailedError();
+	
+	              case 7:
+	                row = result.rows[0];
+	
+	                this.id = row.id;
+	                return _context.abrupt('return', new Blog(this));
+	
+	              case 10:
+	              case 'end':
+	                return _context.stop();
+	            }
+	          }
+	        }, _callee, this);
+	      }));
+	
+	      function create() {
+	        return _ref.apply(this, arguments);
+	      }
+	
+	      return create;
+	    }()
+	  }, {
+	    key: 'update',
+	    value: function () {
+	      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2() {
+	        var query, result;
+	        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+	          while (1) {
+	            switch (_context2.prev = _context2.next) {
+	              case 0:
+	                (0, _validator.validate)(this, (0, _validator.getSchema)(Blog.SCHEMA, 'id', 'user', 'title', 'content'));
+	                query = '\n      UPDATE blog.blog\n      SET\n        title = $3,\n        content = $4\n      WHERE \n        id = $1\n        AND user_id = $2\n      RETURNING created\n      ;';
+	                _context2.next = 4;
+	                return db.query(query, [this.id, this.user.id, this.title, this.content]);
+	
+	              case 4:
+	                result = _context2.sent;
+	
+	                if (!(result.rowCount <= 0)) {
+	                  _context2.next = 7;
+	                  break;
+	                }
+	
+	                throw new _errors2.default.UpdateBlogFailedError();
+	
+	              case 7:
+	                this.created = result.rows[0].created;
+	                return _context2.abrupt('return', new Blog(this));
+	
+	              case 9:
+	              case 'end':
+	                return _context2.stop();
+	            }
+	          }
+	        }, _callee2, this);
+	      }));
+	
+	      function update() {
+	        return _ref2.apply(this, arguments);
+	      }
+	
+	      return update;
+	    }()
+	  }, {
+	    key: 'fill',
+	    value: function () {
+	      var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3() {
+	        var query, result, row;
+	        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+	          while (1) {
+	            switch (_context3.prev = _context3.next) {
+	              case 0:
+	                (0, _validator.validate)({ id: this.id }, (0, _validator.getSchema)(Blog.SCHEMA, 'id'));
+	                query = '\n      SELECT title, content, created\n      FROM blog.blog\n      WHERE \n        id = $1\n        AND status <> $2\n      ;';
+	                _context3.next = 4;
+	                return db.query(query, [this.id, Blog.STATUS.DELETED]);
+	
+	              case 4:
+	                result = _context3.sent;
+	
+	                if (!(result.rowCount <= 0)) {
+	                  _context3.next = 7;
+	                  break;
+	                }
+	
+	                throw new _errors2.default.BlogNotFoundError();
+	
+	              case 7:
+	                row = result.rows[0];
+	                return _context3.abrupt('return', new Blog({
+	                  id: this.id,
+	                  title: row.title,
+	                  content: row.content,
+	                  created: row.created
+	                }));
+	
+	              case 9:
+	              case 'end':
+	                return _context3.stop();
+	            }
+	          }
+	        }, _callee3, this);
+	      }));
+	
+	      function fill() {
+	        return _ref3.apply(this, arguments);
+	      }
+	
+	      return fill;
+	    }()
+	  }, {
+	    key: 'delete',
+	    value: function () {
+	      var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4() {
+	        var query;
+	        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+	          while (1) {
+	            switch (_context4.prev = _context4.next) {
+	              case 0:
+	                (0, _validator.validate)(this, (0, _validator.getSchema)(Blog.SCHEMA, 'id', 'user'));
+	                query = '\n      UPDATE blog.blog\n      SET status = $3\n      WHERE \n        id = $1\n        AND user_id = $2\n      ;';
+	                _context4.next = 4;
+	                return db.query(query, [this.id, this.user.id, Blog.STATUS.DELETED]);
+	
+	              case 4:
+	              case 'end':
+	                return _context4.stop();
+	            }
+	          }
+	        }, _callee4, this);
+	      }));
+	
+	      function _delete() {
+	        return _ref4.apply(this, arguments);
+	      }
+	
+	      return _delete;
+	    }()
+	  }], [{
+	    key: 'getBlogs',
+	    value: function () {
+	      var _ref5 = _asyncToGenerator(regeneratorRuntime.mark(function _callee5(userId, page, pagesize) {
+	        var v, queryCount, resultCount, query, result, blogs, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, row;
+	
+	        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+	          while (1) {
+	            switch (_context5.prev = _context5.next) {
+	              case 0:
+	                v = (0, _validator.validate)({
+	                  user: { id: userId }, page: page, pagesize: pagesize
+	                }, (0, _validator.getSchema)(Blog.SCHEMA, 'user', 'page', 'pagesize'));
+	                /* eslint-disable no-param-reassign */
+	
+	                page = v.page;
+	                pagesize = v.pagesize;
+	                queryCount = '\n      SELECT COUNT(id) AS cnt\n      FROM blog.blog\n      WHERE \n        user_id = $1\n        AND status <> $2\n      ;';
+	                _context5.next = 6;
+	                return db.query(queryCount, [userId, Blog.STATUS.DELETED]);
+	
+	              case 6:
+	                resultCount = _context5.sent;
+	
+	                if (!(resultCount.rowCount <= 0 || resultCount.rows[0].cnt <= 0)) {
+	                  _context5.next = 9;
+	                  break;
+	                }
+	
+	                return _context5.abrupt('return', {
+	                  total: 0
+	                });
+	
+	              case 9:
+	                query = '\n      SELECT id, title, created\n      FROM blog.blog\n      WHERE \n        user_id = $1\n        AND status <> $2\n      ORDER BY id DESC\n      OFFSET $3\n      LIMIT $4\n      ;';
+	                _context5.next = 12;
+	                return db.query(query, [userId, Blog.STATUS.DELETED, (page - 1) * pagesize, pagesize]);
+	
+	              case 12:
+	                result = _context5.sent;
+	                blogs = {
+	                  total: resultCount.rows[0].cnt,
+	                  items: []
+	                };
+	
+	                if (!(result.rowCount > 0)) {
+	                  _context5.next = 34;
+	                  break;
+	                }
+	
+	                _iteratorNormalCompletion = true;
+	                _didIteratorError = false;
+	                _iteratorError = undefined;
+	                _context5.prev = 18;
+	
+	                for (_iterator = result.rows[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                  row = _step.value;
+	
+	                  blogs.items.push(new Blog({
+	                    id: row.id,
+	                    title: row.title,
+	                    created: row.created
+	                  }));
+	                }
+	                _context5.next = 26;
+	                break;
+	
+	              case 22:
+	                _context5.prev = 22;
+	                _context5.t0 = _context5['catch'](18);
+	                _didIteratorError = true;
+	                _iteratorError = _context5.t0;
+	
+	              case 26:
+	                _context5.prev = 26;
+	                _context5.prev = 27;
+	
+	                if (!_iteratorNormalCompletion && _iterator.return) {
+	                  _iterator.return();
+	                }
+	
+	              case 29:
+	                _context5.prev = 29;
+	
+	                if (!_didIteratorError) {
+	                  _context5.next = 32;
+	                  break;
+	                }
+	
+	                throw _iteratorError;
+	
+	              case 32:
+	                return _context5.finish(29);
+	
+	              case 33:
+	                return _context5.finish(26);
+	
+	              case 34:
+	                return _context5.abrupt('return', blogs);
+	
+	              case 35:
+	              case 'end':
+	                return _context5.stop();
+	            }
+	          }
+	        }, _callee5, this, [[18, 22, 26, 34], [27,, 29, 33]]);
+	      }));
+	
+	      function getBlogs(_x, _x2, _x3) {
+	        return _ref5.apply(this, arguments);
+	      }
+	
+	      return getBlogs;
+	    }()
+	  }]);
+	
+	  return Blog;
+	}();
+	
+	Blog.SCHEMA = {
+	  /* eslint-disable newline-per-chained-call */
+	  id: _validator.Joi.number().integer().min(1000000000).required(),
+	  user: _validator.Joi.object({
+	    id: _validator.Joi.number().integer().min(1000000000).required()
+	  }).required(),
+	  title: _validator.Joi.string().required(),
+	  content: _validator.Joi.string(),
+	  page: _validator.Joi.number().integer().min(1).default(1).allow(null, ''),
+	  pagesize: _validator.Joi.number().integer().min(1).default(10).allow(null, '')
+	};
+	Blog.STATUS = {
+	  DRAFT: 10,
+	  PUBLISHED: 20,
+	  DELETED: 30
+	};
 
 /***/ },
 /* 16 */

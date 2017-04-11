@@ -1,4 +1,3 @@
-import 'date-utils'
 import errors from '../errors'
 import { validate, getSchema, Joi as T } from '../validator'
 
@@ -34,9 +33,9 @@ export class User {
   }
 
   static STATUS = {
-    INACTIVE: 1,
-    ACTIVE: 2,
-    DISABLED: 9,
+    INACTIVE: 10,
+    ACTIVE: 20,
+    DISABLED: 90,
   }
 
   // 第一版简化流程，不验证邮箱所有者，只验证是否重复
