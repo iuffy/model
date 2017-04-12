@@ -50,7 +50,6 @@ export class User {
       VALUES ($1, crypt($2, gen_salt('bf', 8)))
       RETURNING id
       ;`
-    /* eslint-disable no-undef */
     const result = await db.query(query, [this.email, password])
     if (result.rowCount <= 0) {
       throw new errors.CreateUserFailedError()
@@ -170,7 +169,6 @@ export class User {
       FROM "user".user
       WHERE email ILIKE $1
       ;`
-    /* eslint-disable no-undef */
     const result = await db.query(query, [email])
     if (result.rowCount > 0) {
       // 如果别人用我的邮箱注册过，状态是非激活，

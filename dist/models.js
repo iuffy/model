@@ -1703,8 +1703,6 @@ module.exports =
 	
 	              case 3:
 	                query = '\n      INSERT INTO "user".user (email, password)\n      VALUES ($1, crypt($2, gen_salt(\'bf\', 8)))\n      RETURNING id\n      ;';
-	                /* eslint-disable no-undef */
-	
 	                _context.next = 6;
 	                return db.query(query, [this.email, password]);
 	
@@ -1970,8 +1968,6 @@ module.exports =
 	              case 0:
 	                (0, _validator.validate)({ email: email }, (0, _validator.getSchema)(this.SCHEMA, 'email'));
 	                query = '\n      SELECT 1\n      FROM "user".user\n      WHERE email ILIKE $1\n      ;';
-	                /* eslint-disable no-undef */
-	
 	                _context6.next = 4;
 	                return db.query(query, [email]);
 	
@@ -2336,8 +2332,6 @@ module.exports =
 	              case 0:
 	                (0, _validator.validate)(this, (0, _validator.getSchema)(Blog.SCHEMA, 'user', 'title', 'content'));
 	                query = '\n      INSERT INTO blog.blog (user_id, title, content)\n      VALUES ($1, $2, $3)\n      RETURNING id\n      ;';
-	                /* eslint-disable no-undef */
-	
 	                _context.next = 4;
 	                return db.query(query, [this.user.id, this.title, this.content]);
 	
@@ -2934,8 +2928,6 @@ module.exports =
 	              case 0:
 	                dbname = this.connections.postgres.default.db;
 	                queryTerminate = '\n      SELECT pg_terminate_backend(pg_stat_activity.pid)\n      FROM pg_stat_activity\n      WHERE pg_stat_activity.datname = $1\n      ;';
-	                /* eslint-disable no-undef */
-	
 	                _context.next = 4;
 	                return db.query('postgres', queryTerminate, [dbname]);
 	

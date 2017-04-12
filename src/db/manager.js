@@ -14,7 +14,6 @@ export class DbManager {
       FROM pg_stat_activity
       WHERE pg_stat_activity.datname = $1
       ;`
-    /* eslint-disable no-undef */
     await db.query('postgres', queryTerminate, [dbname])
     const queryDrop = `DROP DATABASE IF EXISTS "${dbname}";`
     await db.query('postgres', queryDrop)

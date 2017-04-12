@@ -11,7 +11,6 @@ describe('* Test data =======================', () => {
       queryArr.push(fs.readFileSync(path.join(dataPath, f)))
     }
     const query = queryArr.join(';')
-    /* eslint-disable no-undef */
     await db.query(query)
   })
 })

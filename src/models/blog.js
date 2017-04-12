@@ -46,7 +46,6 @@ export class Blog {
       VALUES ($1, $2, $3)
       RETURNING id
       ;`
-    /* eslint-disable no-undef */
     const result = await db.query(query, [this.user.id, this.title, this.content])
     if (result.rowCount <= 0) {
       throw new errors.CreateBlogFailedError()
