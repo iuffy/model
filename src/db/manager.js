@@ -9,12 +9,12 @@ export class DbManager {
 
   async dropDbIfExists() {
     const dbname = this.connections.postgres.default.db
-    // const queryTerminate = `
-    //   SELECT pg_terminate_backend(pg_stat_activity.pid)
-    //   FROM pg_stat_activity
-    //   WHERE pg_stat_activity.datname = $1
-    //   ;`
-    // await db.query('postgres', queryTerminate, [dbname])
+    const queryTerminate = `
+      SELECT pg_terminate_backend(pg_stat_activity.pid)
+      FROM pg_stat_activity
+      WHERE pg_stat_activity.datname = $1
+      ;`
+    await db.query('postgres', queryTerminate, [dbname])
     const queryDrop = `DROP DATABASE IF EXISTS "${dbname}";`
     await db.query('postgres', queryDrop)
   }
