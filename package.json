@@ -21,12 +21,12 @@
     "hashids": "1.0.2",
     "joi": "9.2.0",
     "log4js": "0.6.36",
-    "node-uuid": "1.4.7",
     "pg": "6.1.0",
     "pg-then": "1.2.1",
     "regenerator-runtime": "0.9.5",
     "restify-errors": "4.2.3",
-    "source-map-support": "0.4.0"
+    "source-map-support": "0.4.0",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "babel-polyfill": "^6.9.1",
