@@ -2921,22 +2921,24 @@ module.exports =
 	    key: 'dropDbIfExists',
 	    value: function () {
 	      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
-	        var dbname, queryTerminate, queryDrop;
+	        var dbname, queryDrop;
 	        return regeneratorRuntime.wrap(function _callee$(_context) {
 	          while (1) {
 	            switch (_context.prev = _context.next) {
 	              case 0:
 	                dbname = this.connections.postgres.default.db;
-	                queryTerminate = '\n      SELECT pg_terminate_backend(pg_stat_activity.pid)\n      FROM pg_stat_activity\n      WHERE pg_stat_activity.datname = $1\n      ;';
-	                _context.next = 4;
-	                return db.query('postgres', queryTerminate, [dbname]);
+	                // const queryTerminate = `
+	                //   SELECT pg_terminate_backend(pg_stat_activity.pid)
+	                //   FROM pg_stat_activity
+	                //   WHERE pg_stat_activity.datname = $1
+	                //   ;`
+	                // await db.query('postgres', queryTerminate, [dbname])
 	
-	              case 4:
 	                queryDrop = 'DROP DATABASE IF EXISTS "' + dbname + '";';
-	                _context.next = 7;
+	                _context.next = 4;
 	                return db.query('postgres', queryDrop);
 	
-	              case 7:
+	              case 4:
 	              case 'end':
 	                return _context.stop();
 	            }
